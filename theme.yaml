@@ -1,0 +1,218 @@
+cameras:
+    camera1:
+        type: perspective
+        position: [1,1,2.4]
+sources:
+    omv:
+        type: OMV
+        max_zoom: 17
+        min_display_zoom: 1
+        tiled: true
+global:
+    language: en
+    language_text_source: "function() { return (global.language && feature['name:'+global.language]) || feature.name;\n}\n"
+    water: '#375268'
+    text: '#56788E'
+    minor_text: '#56788E'
+    text_outline: '#FFF'
+    road: '#374452'
+    road_outline: '#EEEEEE'
+    highway: '#374452'
+    highway_outline: 'white'
+    background: '#232C38'
+    # buildings: '#253449'
+    buildings: '#2F3A48'
+    land: '#29464B'
+styles:
+    polygons_transparent:
+        base: polygons
+        blend: opaque
+        blend_order: 1
+fonts:
+    FiraGO:
+        - weight: 400
+          url: https://assets.vector.hereapi.com/fonts/FiraGO-Regular.ttf
+        - weight: 400
+        - style: italics
+          url: https://assets.vector.hereapi.com/fonts/FiraGO-Italic.ttf
+        - weight: 500
+          url: https://assets.vector.hereapi.com/fonts/FiraGO-Medium.ttf
+scene:
+    background:
+        color: global.background
+    sky:
+        zenith: '#010205'
+        horizon: '#010205'
+        fog: '#21262B'
+
+layers:
+    places:
+          data:
+              source: omv
+          city-points:
+              filter: {kind: locality, kind_detail: city, $zoom: {max: 18}}
+              draw: 
+                  text: 
+                      text_source: global.language_text_source
+                      priority: 1
+                      order: 10000
+                      
+                      font: 
+                          family: FiraGO
+                          fill: global.text
+                          stroke:
+                              color: global.text_outline
+                              width: 4
+                          size: [[4, 15px], [12, 18px]]
+                          buffer: 5px
+          town-points:
+              filter: {kind: locality, kind_detail: town, $zoom: {max: 18}}
+              draw:
+                  text: 
+                      text_source: global.language_text_source
+                      priority: 12
+                      order: 10000
+                      font: 
+                          family: FiraGo
+                          fill: [0.388, 0.443, 0.478, 1.00]
+                          size: [[8, 12px], [12, 14px]]
+                          buffer: 30px
+          neighborhoods:
+              filter:
+                  kind: neighbourhood
+              draw:
+                  text:
+                      text_source: global.language_text_source
+                      priority: 10
+                      order: 999
+                      font:
+                          family: FiraGO
+                          fill: global.minor_text
+
+                          size: [[4, 10px], [8, 12px],[12, 12px]]
+                      buffer: 10px
+    landuse:
+        data: 
+            source: omv
+        park:
+            filter:
+                kind: park
+            draw:
+                polygons:
+                    order: function() { return feature.sort_rank; }
+                    color: global.land
+        university:
+            filter:
+                kind: university
+            draw:
+                polygons:
+                    order: function() { return feature.sort_rank; }
+                    color: global.land
+        aerodrome:
+            filter:
+                kind: aerodrome
+            draw:
+                polygons:
+                    order: function() { return feature.sort_rank; }
+                    color: global.land
+        hospital:
+            filter:
+                kind: hospital
+            draw:
+                polygons:
+                    order: function() { return feature.sort_rank; }
+                    color: global.land
+    water:
+        data: { source: omv }
+        draw:
+            polygons:
+                order: function() { return feature.sort_rank; }
+                color: global.water
+
+    roads:
+        data:
+            source: omv
+        filter:
+            not: { kind: [path, rail, ferry] }
+        draw:
+            lines:
+                order: function() { return feature.sort_rank; }
+                color: global.road
+                width: [[12, 18], [18, 11]]
+                cap: round
+        highway:
+            filter:
+                kind: highway
+            draw:
+                lines:
+                    order: function() { return feature.sort_rank; }
+                    color: global.highway
+                    width: [[1, 8000], [8, 2000], [9, 700], [10, 400], [12, 100],[14,30], [18, 30]]
+            label:
+                filter:
+                    all:
+                    - $zoom: {min: 11}
+                draw:
+                    text:
+                        repeat_distance: 20px
+                        font:
+                            text_source: global.language_text_source
+                            family: FiraGo
+                            size: 12px
+                            priority: 1
+                            fill: global.text
+
+        major_road:
+            filter:
+                kind: major_road
+            draw:
+                lines:
+                    order: function() { return feature.sort_rank; }
+                    color: global.road
+                    width: [[8, 200], [12, 60], [18, 10]]
+            label:
+                filter:
+                    all:
+                    - $zoom: {min: 13}
+                draw:
+                    text:
+                        repeat_distance: 100px
+                        font:
+                            text_source: global.language_text_source
+                            family: FiraGo
+                            size: 12
+                            priority: 25
+                            fill:  global.minor_text
+
+        minor_road:
+            filter:
+                kind: minor_road
+            draw:
+                lines:
+                    order: function() { return feature.sort_rank; }
+                    color: global.road
+                    width: [[14, 12], [18, 10]]
+            label:
+                filter:
+                    all:
+                    - $zoom: {min: 16}
+                draw:
+                    text:
+                        repeat_distance: 100px
+                        font:
+                            text_source: global.language_text_source
+                            family: FiraGo
+                            size: 12
+                            priority: 25
+                            fill: global.minor_text
+    buildings:
+        data: { source: omv }
+        draw:
+            polygons:
+                order: function() { return feature.sort_rank; }
+                color: global.buildings
+        3d-buildings:
+            filter: { $zoom: { min: 11 } }
+            draw:
+                polygons:
+                    extrude: function () { return feature.height > 20 || $zoom >= 16; }
