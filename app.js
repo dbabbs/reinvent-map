@@ -1,4 +1,4 @@
-const apikey = "EybNF4MkvcUj8WX1VJRKhT9dwDVz1wIHaKGF5tpqNss";
+const apikey = "qHbGACVC8wUgzipkERYFIvbK8ASY9UhPsKSGTB7quRI";
 const platform = new H.service.Platform({ apikey });
 const defaultLayers = platform.createDefaultLayers();
 const map = new H.Map(
