@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Dylan's Map Styles</title>
-    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="style.css" />
-  </head>
-  <body>
-    <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
-    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
-    
-    
-    <div class="tooltip-container">
-      <div class="marker"></div>
-      <div class="halo"></div>
-      <div class="panel">
-        <div>
-          <span class="title">Day</span>
-          <span id="day">Monday</span>
-        </div>
-        <div>
-            <span class="title">Time</span>
-            <span id="time">12:24 PM</span>
-        </div>
-        <div>
 
-        </div>
-          <span class="title">Place</span>
-          <span id="casino">The Mirage</span>
-      </div>
-    </div>
-    
-    <div id="map"></div>
-    <script src="app.js" type="module"></script>
-  </body>
+<head>
+	<title>Dylan's Map Styles</title>
+	<link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css" />
+	<link href="https://fonts.googleapis.com/css?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+
+<body>
+	<script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+	<script src="https://js.api.here.com/v3/3.1/mapsjs-core.js"></script>
+	<script src="https://js.api.here.com/v3/3.1/mapsjs-service.js"></script>
+	<script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js"></script>
+	<script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js"></script>
+
+
+	<div class="tooltip-container">
+		<div class="marker"></div>
+		<div class="halo"></div>
+		<div class="panel">
+			<div>
+				<span class="title">Day</span>
+				<span id="day">Monday</span>
+			</div>
+			<div>
+				<span class="title">Time</span>
+				<span id="time">12:24 PM</span>
+			</div>
+			<div>
+			</div>
+			<span class="title">Place</span>
+			<span id="casino">The Mirage</span>
+		</div>
+	</div>
+	<div id="map"></div>
+	<script src="app.js" type="module"></script>
+</body>
+
 </html>
-

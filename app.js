@@ -1,5 +1,4 @@
-const apikey = "qHbGACVC8wUgzipkERYFIvbK8ASY9UhPsKSGTB7quRI";
-const platform = new H.service.Platform({ apikey });
+const platform = new H.service.Platform({ apikey: "qHbGACVC8wUgzipkERYFIvbK8ASY9UhPsKSGTB7quRI" });
 const defaultLayers = platform.createDefaultLayers();
 const map = new H.Map(
    document.querySelector("#map"),
@@ -22,9 +21,9 @@ map.getViewModel().setLookAtData(
    true
 );
 
-const realStyle = new H.map.Style("./theme.yaml");
+const style = new H.map.Style("./theme.yaml");
 const provider = map.getBaseLayer().getProvider();
-provider.setStyle(realStyle);
+provider.setStyle(style);
 
 const weekdays = [
    "Sunday",
@@ -38,7 +37,6 @@ const weekdays = [
 
 (async () => {
    const casinos = await fetch("./data/casinos.json").then(res => res.json());
-
    const data = (await fetch("./data/output.json").then(res => res.json()))
       .features[0];
    const times = data.properties.coordTimes;
